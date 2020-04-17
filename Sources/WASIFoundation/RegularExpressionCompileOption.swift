@@ -25,11 +25,11 @@ public extension RegularExpression {
     /// Report only success/fail.
     case noSub
 
-    /** Treat a newline in string as dividing string into multiple lines, so that ```$``` can match 
-    before the newline and ```^``` can match after. Also, don’t permit ```.``` to match a newline, 
-    and don’t permit ```[^…]``` to match a newline.
-     Otherwise, newline acts like any other ordinary character.
-    */
+    /** Treat a newline in string as dividing string into multiple lines, so that ```$``` can match
+     before the newline and ```^``` can match after. Also, don’t permit ```.``` to match a newline,
+     and don’t permit ```[^…]``` to match a newline.
+      Otherwise, newline acts like any other ordinary character.
+     */
     case newLine
 
     public init?(rawValue: POSIXRegularExpression.FlagBitmask) {

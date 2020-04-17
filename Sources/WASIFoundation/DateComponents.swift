@@ -109,7 +109,23 @@ public struct DateComponents {
   }
 
   private var brokenDown: tm {
-    tm.init(
+    #if os(WASI)
+    return tm.init(
+      tm_sec: second,
+      tm_min: minute,
+      tm_hour: hour,
+      tm_mday: dayOfMonth,
+      tm_mon: month - 1,
+      tm_year: year - 1900,
+      tm_wday: weekday,
+      tm_yday: dayOfYear,
+      tm_isdst: -1,
+      tm_gmtoff: 0,
+      tm_zone: nil,
+      __tm_nsec: 0
+    )
+    #else
+    return tm.init(
       tm_sec: second,
       tm_min: minute,
       tm_hour: hour,
@@ -122,6 +138,7 @@ public struct DateComponents {
       tm_gmtoff: 0,
       tm_zone: nil
     )
+    #endif
   }
 
   private var timeInterval: TimeInterval {

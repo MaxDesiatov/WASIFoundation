@@ -15,7 +15,10 @@ import Glibc
 public typealias POSIXRegularExpression = regex_t
 
 public extension POSIXRegularExpression {
-  static func compile(_ pattern: String, options: [RegularExpression.CompileOption]) -> (ErrorCode, POSIXRegularExpression) {
+  static func compile(
+    _ pattern: String,
+    options: [RegularExpression.CompileOption]
+  ) -> (ErrorCode, POSIXRegularExpression) {
     var regularExpression = POSIXRegularExpression()
 
     let flags = options.optionsBitmask()
@@ -99,7 +102,7 @@ public extension POSIXRegularExpression {
 public extension POSIXRegularExpression {
   typealias FlagBitmask = Int32
 
-  typealias ErrorCode = reg_errcode_t
+  typealias ErrorCode = Int32
 
   typealias Match = regmatch_t
 }

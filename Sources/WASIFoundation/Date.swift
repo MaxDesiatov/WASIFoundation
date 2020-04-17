@@ -80,10 +80,10 @@ public struct Date: Equatable, Hashable, Comparable, CustomStringConvertible {
     "\(timeIntervalSinceReferenceDate)"
   }
 
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(timeIntervalSinceReferenceDate)
-        }
-        
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(timeIntervalSinceReferenceDate)
+  }
+
   // MARK: - Initialization
 
   /// Returns a `Date` initialized to the current date and time.
@@ -109,7 +109,7 @@ public struct Date: Equatable, Hashable, Comparable, CustomStringConvertible {
   /**
    Returns a `Date` initialized relative to another given date by a given number of seconds.
 
-   - Parameter timeInterval: The number of seconds to add to `date`. A negative value means the 
+   - Parameter timeInterval: The number of seconds to add to `date`. A negative value means the
    receiver will be earlier than `date`.
    - Parameter date: The reference date.
    */
@@ -124,8 +124,8 @@ public struct Date: Equatable, Hashable, Comparable, CustomStringConvertible {
 
    - Parameter another: The date with which to compare the receiver.
 
-   - Returns: The interval between the receiver and the `another` parameter. If the receiver is 
-   earlier than `anotherDate`, the return value is negative. If `anotherDate` is `nil`, the results 
+   - Returns: The interval between the receiver and the `another` parameter. If the receiver is
+   earlier than `anotherDate`, the return value is negative. If `anotherDate` is `nil`, the results
    are undefined.
 
    - SeeAlso: `timeIntervalSince1970`

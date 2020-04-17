@@ -12,9 +12,6 @@ import Darwin
 import Glibc
 #endif
 
-import class Foundation.NSError
-import struct Foundation.POSIXError
-
 public extension POSIXError {
   /// Creates error from C ```errno```.
   static var fromErrno: POSIXError? {

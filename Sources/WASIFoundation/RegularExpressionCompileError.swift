@@ -16,10 +16,10 @@ public extension RegularExpression {
   // POSIX Regular Expression compilation error
   enum CompileError: Error, RawRepresentable {
     /** Invalid use  of repetition operators such as using '*' as the first character.
-    For example, the consecutive repetition operators ```**``` in ```a**``` are 
-    invalid. As another example, if the syntax is extended regular expression syntax, then the 
-    repetition operator ```*``` with nothing on which to operate in ```*``` is invalid.
-    */
+     For example, the consecutive repetition operators ```**``` in ```a**``` are
+     invalid. As another example, if the syntax is extended regular expression syntax, then the
+     repetition operator ```*``` with nothing on which to operate in ```*``` is invalid.
+     */
     case InvalidRepetition
 
     /// Invalid use of back reference operator.

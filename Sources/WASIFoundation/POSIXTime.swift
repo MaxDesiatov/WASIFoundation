@@ -29,7 +29,7 @@ public extension timeval {
 
     let microseconds = decimalValue * million
 
-    self.init(tv_sec: Int(integerValue), tv_usec: POSIXMicroseconds(microseconds))
+    self.init(tv_sec: time_t(integerValue), tv_usec: POSIXMicroseconds(microseconds))
   }
 
   var timeInterval: TimeInterval {
@@ -51,7 +51,7 @@ public extension timespec {
 
     let nanoseconds = decimalValue * billion
 
-    self.init(tv_sec: Int(integerValue), tv_nsec: Int(nanoseconds))
+    self.init(tv_sec: time_t(integerValue), tv_nsec: Int(nanoseconds))
   }
 
   var timeInterval: TimeInterval {
@@ -70,7 +70,8 @@ public extension tm {
     var seconds = UTCSecondsSince1970
 
     // don't free!
-    // The return value points to a statically allocated struct which might be overwritten by subsequent calls to any of the date and time functions.
+    // The return value points to a statically allocated struct which might be overwritten by
+    // subsequent calls to any of the date and time functions.
     // http://linux.die.net/man/3/gmtime
     let timePointer = gmtime(&seconds)!
 
@@ -86,7 +87,7 @@ public typealias POSIXMicroseconds = __darwin_suseconds_t
 
 #else
 
-public typealias POSIXMicroseconds = __suseconds_t
+public typealias POSIXMicroseconds = suseconds_t
 
 public func modf(value: Double) -> (Double, Double) {
   var integerValue: Double = 0
