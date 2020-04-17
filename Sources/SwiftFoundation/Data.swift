@@ -17,21 +17,18 @@
 #if os(Linux) || XcodeLinux
     
     /// Encapsulates data.
-    public struct Data: ByteValue, Equatable, Hashable, CustomStringConvertible, RandomAccessCollection, MutableCollection {
+    public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCollection, MutableCollection {
         
         public typealias Index = Int
-        public typealias Indices = DefaultRandomAccessIndices<Data>
+        public typealias Indices = DefaultIndices<Data>
         
         // MARK: - Properties
         
-        internal var _bytes: ContiguousArray<Byte>
+        internal var _bytes: ContiguousArray<UInt8>
         
-        public var bytes: [Byte] {
-            
-            @inline(__always)
+        public var bytes: [UInt8] {
             get { return Array(_bytes) }
-            
-            @inline(__always)
+
             set { _bytes = ContiguousArray(newValue) }
         }
         
@@ -40,8 +37,7 @@
         /// Initialize a `Data` with the contents of an Array.
         ///
         /// - parameter bytes: An array of bytes to copy.
-        @inline(__always)
-        public init(bytes: [Byte] = []) {
+        public init(bytes: [UInt8] = []) {
             
             _bytes = ContiguousArray(bytes)
         }
@@ -49,7 +45,6 @@
         /// Initialize a `Data` with the contents of an Array.
         ///
         /// - parameter bytes: An array of bytes to copy.
-        @inline(__always)
         public init(bytes: ArraySlice<UInt8>) {
             
             _bytes = ContiguousArray(bytes)
@@ -58,7 +53,6 @@
         /// Initialize a `Data` with the specified size.
         ///
         /// - parameter capacity: The size of the data.
-        @inline(__always)
         public init?(count: Int) {
             
             // Never fails on Linux
@@ -69,7 +63,6 @@
         ///
         /// - parameter bytes: A pointer to the memory. It will be copied.
         /// - parameter count: The number of bytes to copy.
-        @inline(__always)
         public init(bytes pointer: UnsafeRawPointer, count: Int) {
             
             _bytes = ContiguousArray<UInt8>(repeating: 0, count: count)
@@ -90,19 +83,18 @@
         
         // MARK: - Accessors
         
-        public var hashValue: Int {
-            
-            /// Only hash first 80 bytes
-            let hashBytes = bytes.prefix(80)
-            
-            return Hash(Data(bytes: hashBytes))
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(count)
+
+            Swift.withUnsafeBytes(of: bytes) {
+                // We have access to the full byte buffer here, but not all of it is meaningfully used (bytes past self.length may be garbage).
+                let bytes = UnsafeRawBufferPointer(start: $0.baseAddress, count: self.count)
+                hasher.combine(bytes: bytes)
+            }
         }
         
         public var description: String {
-            
-            let hexString = bytes.map({ $0.toHexadecimal() }).reduce("", { $0.0 + $0.1 })
-            
-            return "<" + hexString + ">"
+            return "<" + bytes.map { $0.toHexadecimal() }.joined() + ">"
         }
         
         // MARK: - Methods
@@ -110,7 +102,6 @@
         /// Append data to the data.
         ///
         /// - parameter data: The data to append to this data.
-        @inline(__always)
         public mutating func append(_ other: Data) {
             
             _bytes += other._bytes
@@ -119,7 +110,6 @@
         /// Return a new copy of the data in a specified range.
         ///
         /// - parameter range: The range to copy.
-        @inline(__always)
         public func subdata(in range: Range<Index>) -> Data {
             
             return Data(bytes: _bytes[range])
@@ -129,21 +119,14 @@
         
         /// Sets or returns the byte at the specified index.
         
-        public subscript(index: Index) -> Byte {
-            
-            @inline(__always)
+        public subscript(index: Index) -> UInt8 {
             get { return _bytes[index] }
-            
-            @inline(__always)
+
             set { _bytes[index] = newValue }
         }
         
-        public subscript(bounds: Range<Int>) -> MutableRandomAccessSlice<Data> {
-            
-            @inline(__always)
-            get { return MutableRandomAccessSlice(base: self, bounds: bounds) }
-            
-            @inline(__always)
+        public subscript(bounds: Range<Int>) -> Slice<Data> {
+            get { return Slice(base: self, bounds: bounds) }
             set { _bytes.replaceSubrange(bounds, with: newValue) }
         }
         
@@ -172,14 +155,6 @@
         public func index(after i: Index) -> Index {
             return i + 1
         }
-        
-        /// An iterator over the contents of the data.
-        ///
-        /// The iterator will increment byte-by-byte.
-        public func makeIterator() -> Data.Iterator {
-            
-            return IndexingIterator(_elements: self)
-        }
     }
     
     // MARK: - Equatable
@@ -207,54 +182,3 @@
     }
     
 #endif
-
-// MARK: - Darwin
-
-#if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-    
-    extension Foundation.Data: ByteValue {
-        
-        public typealias ByteValue = [Byte]
-        
-        public var bytes: [Byte] {
-            
-            get {
-                
-                return withUnsafeBytes({ (pointer: UnsafePointer<Byte>) in
-                    
-                    var bytes = [UInt8](repeating: 0, count: count)
-                    
-                    memcpy(&bytes, pointer, count)
-                    
-                    return bytes
-                })
-            }
-            
-            set { self = Foundation.Data(bytes: newValue) }
-        }
-    }
-    
-    public func + (lhs: Foundation.Data, rhs: Foundation.Data) -> Foundation.Data {
-        
-        var copy = lhs
-        
-        copy.append(rhs)
-        
-        return copy
-    }
-    
-#endif
-
-// MARK: - Supporting Types
-
-public typealias Byte = UInt8
-
-/// Protocol for converting types to and from data.
-public protocol DataConvertible {
-    
-    /// Attempt to inialize from `Data`.
-    init?(data: Data)
-    
-    /// Convert to data. 
-    func toData() -> Data
-}

@@ -45,42 +45,42 @@ public struct JSON {
 
 public extension JSON.Value {
     
-    public var arrayValue: JSON.Array? {
+    var arrayValue: JSON.Array? {
         
         guard case let .array(value) = self else { return nil }
         
         return value
     }
     
-    public var objectValue: JSON.Object? {
+    var objectValue: JSON.Object? {
         
         guard case let .object(value) = self else { return nil }
         
         return value
     }
     
-    public var stringValue: String? {
+    var stringValue: String? {
         
         guard case let .string(value) = self else { return nil }
         
         return value
     }
     
-    public var booleanValue: Bool? {
+    var booleanValue: Bool? {
         
         guard case let .boolean(value) = self else { return nil }
         
         return value
     }
     
-    public var integerValue: Int? {
+    var integerValue: Int? {
         
         guard case let .integer(value) = self else { return nil }
         
         return value
     }
     
-    public var doubleValue: Double? {
+    var doubleValue: Double? {
         
         guard case let .double(value) = self else { return nil }
         
@@ -185,32 +185,8 @@ public extension JSON.Value {
 
 public extension JSON.Value {
     
-    public var description: String {
+    var description: String {
         
         return "\(rawValue)"
-    }
-}
-
-// MARK: Equatable
-
-public func ==(lhs: JSON.Value, rhs: JSON.Value) -> Bool {
-    
-    switch (lhs, rhs) {
-        
-    case (.null, .null): return true
-        
-    case let (.string(leftValue), .string(rightValue)): return leftValue == rightValue
-        
-    case let (.boolean(leftValue), .boolean(rightValue)): return leftValue == rightValue
-        
-    case let (.integer(leftValue), .integer(rightValue)): return leftValue == rightValue
-        
-    case let (.double(leftValue), .double(rightValue)): return leftValue == rightValue
-        
-    case let (.array(leftValue), .array(rightValue)): return leftValue == rightValue
-        
-    case let (.object(leftValue), .object(rightValue)): return leftValue == rightValue
-        
-    default: return false
     }
 }

@@ -9,7 +9,7 @@
 public extension HTTP {
     
     /// The standard status codes used with the [HTTP](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) protocol.
-    public enum StatusCode: Int {
+    enum StatusCode: Int {
         
         /// Initializes to 200.
         public init() { self = .OK }

@@ -9,7 +9,7 @@
 public extension HTTP {
     
     /// HTTP Method.
-    public enum Method: String {
+    enum Method: String {
         
         case GET
         case PUT

@@ -14,11 +14,11 @@
 
 public extension JSON.Value {
     
-    public init?(string: Swift.String) {
+    init?(string: Swift.String) {
         
         let tokenerError: UnsafeMutablePointer<json_tokener_error>! = UnsafeMutablePointer<json_tokener_error>.allocate(capacity: 1)
         
-        defer { tokenerError.deallocate(capacity: 1) }
+        defer { tokenerError.deallocate() }
         
         let jsonObject = json_tokener_parse_verbose(string, tokenerError)
         

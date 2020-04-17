@@ -46,7 +46,7 @@ final class RangeTests: XCTestCase {
     }
 }
 
-private extension Range where Bound: Integer {
+private extension Range where Bound: BinaryInteger {
     
     func verifyElements(of superset: Range<Int>) -> Bool {
         

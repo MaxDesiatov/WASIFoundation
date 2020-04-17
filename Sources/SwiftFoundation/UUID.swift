@@ -19,7 +19,7 @@
 #if os(Linux) || XcodeLinux
     
     /// A representation of a universally unique identifier (```UUID```).
-    public struct UUID: ByteValue, Equatable, Hashable, RawRepresentable, CustomStringConvertible {
+    public struct UUID: RawRepresentable, CustomStringConvertible {
         
         // MARK: - Static Properties
         
@@ -61,7 +61,7 @@
             
             let uuidPointer = UnsafeMutablePointer<uuid_t>.allocate(capacity: 1)
             
-            defer { uuidPointer.deallocate(capacity: 1) }
+            defer { uuidPointer.deallocate() }
             
             guard uuid_parse(rawValue, unsafeBitCast(uuidPointer, to: UnsafeMutablePointer<UInt8>.self)) != -1
                 else { return nil }
@@ -100,17 +100,19 @@
     
     // MARK: - Hashable
     
-    public extension UUID {
-        
-        var hashValue: Int {
-            
-            return toData().hashValue
+extension UUID: Hashable {
+        public func hash(into hasher: inout Hasher) {
+            Swift.withUnsafeBytes(of: bytes) {
+                // We have access to the full byte buffer here, but not all of it is meaningfully used (bytes past self.length may be garbage).
+                let bytes = UnsafeRawBufferPointer(start: $0.baseAddress, count: Self.length)
+                hasher.combine(bytes: bytes)
+            }
         }
     }
     
-    // MARK: - Equatable
+extension UUID: Equatable {
     
-    public func == (lhs: UUID, rhs: UUID) -> Bool {
+    public static func == (lhs: UUID, rhs: UUID) -> Bool {
         
         return lhs.bytes.0 == rhs.bytes.0 &&
             lhs.bytes.1 == rhs.bytes.1 &&
@@ -129,6 +131,7 @@
             lhs.bytes.14 == rhs.bytes.14 &&
             lhs.bytes.15 == rhs.bytes.15
     }
+}
 
 #endif
 
@@ -145,7 +148,7 @@
         public static var unformattedStringLength: Int { return 32 }
     }
     
-    extension Foundation.UUID: ByteValue {
+    extension Foundation.UUID {
         
         @inline(__always)
         public init(bytes: uuid_t) {
@@ -179,19 +182,17 @@
     
 #endif
 
-// MARK: - DataConvertible
+extension UUID {
 
-extension UUID: DataConvertible {
-    
     public init?(data: Data) {
-        
+
         guard data.count == UUID.length else { return nil }
-        
+
         self.init(bytes: (data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]))
     }
-    
+
     public func toData() -> Data {
-        
+
         return Data(bytes: [bytes.0, bytes.1, bytes.2, bytes.3, bytes.4, bytes.5, bytes.6, bytes.7, bytes.8, bytes.9, bytes.10, bytes.11, bytes.12, bytes.13, bytes.14, bytes.15])
     }
 }

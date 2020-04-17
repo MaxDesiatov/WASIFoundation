@@ -30,7 +30,7 @@ public extension FileDescriptor {
     ///
     /// - returns: The shared file handle associated with the standard input file.
     ///
-    public static let standardInput: FileDescriptor = 0
+    static let standardInput: FileDescriptor = 0
     
     /// Returns the file handle associated with the standard output file.
     /// Conventionally this is a terminal device that receives a stream of data from a program. 
@@ -40,7 +40,7 @@ public extension FileDescriptor {
     ///
     /// - returns: The shared file handle associated with the standard output file.
     ///
-    public static let standardOutput: FileDescriptor = 1
+    static let standardOutput: FileDescriptor = 1
     
     /// Returns the file handle associated with the standard error file.
     /// Conventionally this is a terminal device to which error messages are sent. 
@@ -50,7 +50,7 @@ public extension FileDescriptor {
     ///
     /// - returns: The shared file handle associated with the standard error file.
     ///
-    public static let standardError: FileDescriptor = 2
+    static let standardError: FileDescriptor = 2
     
     /// Returns a file handle associated with a null device.
     /// You can use null-device file handles as “placeholders” for standard-device file handles 
@@ -64,7 +64,7 @@ public extension FileDescriptor {
     ///
     /// - returns: A file handle associated with a null device.
     ///
-    public static let nullDevice: FileDescriptor = open("/dev/null", O_RDWR | O_BINARY)
+    static let nullDevice: FileDescriptor = open("/dev/null", O_RDWR | O_BINARY)
 }
 
 public let O_BINARY: Int32 = 0

@@ -53,7 +53,7 @@
             
             get { return timeIntervalSinceReferenceDate + Date.timeIntervalBetween1970AndReferenceDate }
             
-            set { timeIntervalSinceReferenceDate = timeIntervalsince1970 - Date.timeIntervalBetween1970AndReferenceDate }
+            set { timeIntervalSinceReferenceDate = newValue - Date.timeIntervalBetween1970AndReferenceDate }
         }
         
         /**

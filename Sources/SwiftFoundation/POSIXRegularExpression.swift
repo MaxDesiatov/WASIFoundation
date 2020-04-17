@@ -16,7 +16,7 @@ public typealias POSIXRegularExpression = regex_t
 
 public extension POSIXRegularExpression {
     
-    public static func compile(_ pattern: String, options: [RegularExpression.CompileOption]) -> (ErrorCode, POSIXRegularExpression) {
+    static func compile(_ pattern: String, options: [RegularExpression.CompileOption]) -> (ErrorCode, POSIXRegularExpression) {
         
         var regularExpression = POSIXRegularExpression()
         
@@ -27,12 +27,12 @@ public extension POSIXRegularExpression {
         return (ErrorCode(errorCode), regularExpression)
     }
     
-    public mutating func free() {
+    mutating func free() {
         
         regfree(&self)
     }
     
-    public func firstMatch(_ string: String, options: [RegularExpression.MatchOption]) -> RegularExpressionMatch? {
+    func firstMatch(_ string: String, options: [RegularExpression.MatchOption]) -> RegularExpressionMatch? {
         
         // we are sure that that this method does not mutate the regular expression, so we make a copy
         var expression = self
@@ -82,7 +82,7 @@ public extension POSIXRegularExpression {
                 
                 let range = Int(subexpressionMatch.rm_so) ..< Int(subexpressionMatch.rm_eo)
                 
-                match.subexpressionRanges.append(RegularExpressionMatch.Range.Found(Range(range)))
+                match.subexpressionRanges.append(RegularExpressionMatch.Range.Found(range))
             }
         }
         
@@ -96,11 +96,11 @@ public extension POSIXRegularExpression {
     
     public extension POSIXRegularExpression {
         
-        public typealias FlagBitmask = Int32
+        typealias FlagBitmask = Int32
         
-        public typealias ErrorCode = Int32
+        typealias ErrorCode = Int32
         
-        public typealias Match = regmatch_t
+        typealias Match = regmatch_t
     }
     
 #elseif os(Linux)

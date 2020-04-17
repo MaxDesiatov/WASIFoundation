@@ -1,10 +1,10 @@
 SwiftFoundation/SwiftFoundation.xcodeproj/project.xcworkspace/xcuserdata/*
 SwiftFoundation.xcworkspace/xcuserdata/*
-SwiftFoundationAppleBridge/SwiftFoundationAppleBridge.xcodeproj/xcuserdata/*
 SwiftFoundation/SwiftFoundation.xcodeproj/xcuserdata/*
 Carthage/*
 SwiftFoundation/SwiftFoundationTests/1.json
 .build
+.swiftpm
 
 Packages/*
 

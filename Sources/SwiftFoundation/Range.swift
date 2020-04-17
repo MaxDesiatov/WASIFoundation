@@ -6,7 +6,7 @@
 //  Copyright © 2016 PureSwift. All rights reserved.
 //
 
-public extension Range where Bound: Integer {
+public extension Range where Bound: BinaryInteger {
     
     func isSubset(_ other: Range) -> Bool {
         

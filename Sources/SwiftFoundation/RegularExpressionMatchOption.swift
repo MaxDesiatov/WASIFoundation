@@ -15,7 +15,7 @@
 public extension RegularExpression {
     
     /// POSIX Regular Expression Matching Options */
-    public enum MatchOption: Int32, BitMaskOption {
+    enum MatchOption: Int32, BitMaskOption {
                 
         /// Do not regard the beginning of the specified string as the beginning of a line;
         /// more generally, don’t make any assumptions about what text might precede it.

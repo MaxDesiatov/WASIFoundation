@@ -10,7 +10,7 @@
 
     public extension Data {
         
-        public struct Base64EncodingOptions : OptionSet {
+        struct Base64EncodingOptions : OptionSet {
             public let rawValue : UInt
             public init(rawValue: UInt) { self.rawValue = rawValue }
             
@@ -20,7 +20,7 @@
             public static let encodingEndLineWithLineFeed = Base64EncodingOptions(rawValue: UInt(1 << 5))
         }
         
-        public struct Base64DecodingOptions : OptionSet {
+        struct Base64DecodingOptions : OptionSet {
             public let rawValue : UInt
             public init(rawValue: UInt) { self.rawValue = rawValue }
             
@@ -29,7 +29,7 @@
         
         /* Create an NSData from a Base-64 encoded NSString using the given options. By default, returns nil when the input is not recognized as valid Base-64.
          */
-        public init?(base64Encoded base64String: String, options: Base64DecodingOptions = []) {
+        init?(base64Encoded base64String: String, options: Base64DecodingOptions = []) {
             let encodedBytes = Array(base64String.utf8)
             guard let decodedBytes = Data.base64DecodeBytes(encodedBytes, options: options) else {
                 return nil
@@ -39,7 +39,7 @@
         
         /* Create a Base-64 encoded NSString from the receiver's contents using the given options.
          */
-        public func base64EncodedString(_ options: Base64EncodingOptions = []) -> String {
+        func base64EncodedString(_ options: Base64EncodingOptions = []) -> String {
             let encodedBytes = Data.base64EncodeBytes(bytes, options: options)
             let characters = encodedBytes.map { Character(UnicodeScalar($0)) }
             return String(characters)
@@ -47,7 +47,7 @@
         
         /* Create an NSData from a Base-64, UTF-8 encoded NSData. By default, returns nil when the input is not recognized as valid Base-64.
          */
-        public init?(base64Encoded base64Data: Data, options: Base64DecodingOptions = []) {
+        init?(base64Encoded base64Data: Data, options: Base64DecodingOptions = []) {
             guard let decodedBytes = Data.base64DecodeBytes(base64Data.bytes, options: options) else {
                 return nil
             }
@@ -56,7 +56,7 @@
         
         /* Create a Base-64, UTF-8 encoded NSData from the receiver's contents using the given options.
          */
-        public func base64EncodedData(_ options: Base64EncodingOptions = []) -> Data {
+        func base64EncodedData(_ options: Base64EncodingOptions = []) -> Data {
             let encodedBytes = Data.base64EncodeBytes(bytes, options: options)
             return Data(bytes: encodedBytes, count: encodedBytes.count)
         }

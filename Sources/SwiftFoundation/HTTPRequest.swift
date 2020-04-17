@@ -9,7 +9,7 @@
 public extension HTTP {
     
     /// HTTP request. 
-    public struct Request: URLRequest {
+    struct Request: URLRequest {
         
         public var url: URL
         

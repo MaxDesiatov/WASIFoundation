@@ -9,7 +9,7 @@
 public extension HTTP {
     
     /// HTTP URL response.
-    public struct Response: URLResponse {
+    struct Response: URLResponse {
         
         /// Returns a dictionary containing all the HTTP header fields.
         public var headers: [String: String]

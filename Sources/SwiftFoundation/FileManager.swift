@@ -77,7 +77,7 @@ public struct FileManager {
         
         let path = UnsafeMutablePointer<CChar>.allocate(capacity: stringBufferSize)
         
-        defer { path.deallocate(capacity: stringBufferSize) }
+        defer { path.deallocate() }
         
         getcwd(path, stringBufferSize - 1)
         
@@ -193,9 +193,9 @@ public struct FileManager {
             
         #endif
         
-        let memoryPointer = UnsafeMutablePointer<Byte>.allocate(capacity: fileSize)
+        let memoryPointer = UnsafeMutablePointer<UInt8>.allocate(capacity: fileSize)
         
-        defer { memoryPointer.deallocate(capacity: fileSize) }
+        defer { memoryPointer.deallocate() }
         
         let readBytes = read(file, memoryPointer, fileSize)
         

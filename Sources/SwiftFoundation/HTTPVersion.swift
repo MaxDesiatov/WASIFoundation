@@ -9,7 +9,7 @@
 public extension HTTP {
     
     /// Defines the HTTP protocol version.
-    public struct Version {
+    struct Version: Equatable {
         
         public typealias ValueType = UInt8
         
@@ -27,9 +27,3 @@ public extension HTTP {
         }
     }
 }
-
-public func == (lhs: HTTP.Version, rhs: HTTP.Version) -> Bool {
-    
-    return lhs.major == rhs.major && lhs.minor == rhs.minor
-}
-

@@ -100,7 +100,7 @@ public extension JSON {
     /// Options for serializing JSON.
     ///
     /// - Note: Uses the [JSON-C](https://github.com/json-c/json-c) library.
-    public enum WritingOption: BitMaskOption {
+    enum WritingOption: BitMaskOption {
         
         /// Causes the output to have minimal whitespace inserted to make things slightly more readable.
         case spaced

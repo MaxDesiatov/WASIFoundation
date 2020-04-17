@@ -51,7 +51,7 @@ public extension stat {
     var lastDataModificationDate: Date {
         
         get { return Date(timeIntervalSince1970: st_mtimespec.timeInterval) }
-        set { st_mtimespec = timespec(timeInterval: lastDataModificationDate.timeIntervalSince1970) }
+        set { st_mtimespec = timespec(timeInterval: newValue.timeIntervalSince1970) }
     }
     
     /// Date of last status change. Date of ```st_ctimespec``` or ```st_ctime```.
@@ -60,14 +60,14 @@ public extension stat {
     var lastStatusChangeDate: Date {
         
         get { return Date(timeIntervalSince1970: st_ctimespec.timeInterval) }
-        set { st_ctimespec = timespec(timeInterval: lastDataModificationDate.timeIntervalSince1970) }
+        set { st_ctimespec = timespec(timeInterval: newValue.timeIntervalSince1970) }
     }
     
     /// Date file was created. Date of ```st_birthtimespec``` or ```st_birthtime```.
     var creationDate: Date {
         
         get { return Date(timeIntervalSince1970: st_birthtimespec.timeInterval) }
-        set { st_birthtimespec = timespec(timeInterval: lastDataModificationDate.timeIntervalSince1970) }
+        set { st_birthtimespec = timespec(timeInterval: newValue.timeIntervalSince1970) }
     }
     
     #endif
@@ -75,7 +75,7 @@ public extension stat {
     var fileSize: Int {
         
         get { return Int(st_size) }
-        set { st_size = off_t(fileSize) }
+        set { st_size = off_t(newValue) }
     }
 }
 
@@ -102,7 +102,7 @@ public extension mode_t {
         
         set {
             
-            guard let fileType = fileType else {
+            guard let fileType = newValue else {
                 
                 self = (self | 0)
                 return

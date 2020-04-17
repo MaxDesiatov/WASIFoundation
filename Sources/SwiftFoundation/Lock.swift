@@ -30,8 +30,8 @@
         
         deinit {
             pthread_mutex_destroy(mutex)
-            mutex.deinitialize()
-            mutex.deallocate(capacity: 1)
+            mutex.deinitialize(count: 1)
+            mutex.deallocate()
         }
         
         public func lock() {
@@ -144,8 +144,8 @@
         
         deinit {
             pthread_mutex_destroy(mutex)
-            mutex.deinitialize()
-            mutex.deallocate(capacity: 1)
+            mutex.deinitialize(count: 1)
+            mutex.deallocate()
         }
         
         public func lock() {
@@ -175,10 +175,10 @@
         deinit {
             pthread_mutex_destroy(mutex)
             pthread_cond_destroy(cond)
-            mutex.deinitialize()
-            cond.deinitialize()
-            mutex.deallocate(capacity: 1)
-            cond.deallocate(capacity: 1)
+            mutex.deinitialize(count: 1)
+            cond.deinitialize(count: 1)
+            mutex.deallocate()
+            cond.deallocate()
         }
         
         public func lock() {
