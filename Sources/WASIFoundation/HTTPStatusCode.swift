@@ -212,7 +212,8 @@ public extension HTTP {
 
     /// [Not Found](https://en.wikipedia.org/wiki/HTTP_404)
     ///
-    /// The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
+    /// The requested resource could not be found but may be available again in the future.
+    /// Subsequent requests by the client are permissible.
     case NotFound = 404
 
     /// Method Not Allowed
