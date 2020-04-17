@@ -151,4 +151,52 @@ public struct URL: CustomStringConvertible {
 
     return description
   }
+
+  func _pathByFixingSlashes(compress: Bool = true, stripTrailing: Bool = true) -> String? {
+    guard let p = path else {
+      return nil
+    }
+
+    if p == "/" {
+      return p
+    }
+
+    var result = p
+    if compress {
+      let startPos = result.startIndex
+      var endPos = result.endIndex
+      var curPos = startPos
+
+      while curPos < endPos {
+        if result[curPos] == "/" {
+          var afterLastSlashPos = curPos
+          while afterLastSlashPos < endPos && result[afterLastSlashPos] == "/" {
+            afterLastSlashPos = result.index(after: afterLastSlashPos)
+          }
+          if afterLastSlashPos != result.index(after: curPos) {
+            result.replaceSubrange(curPos..<afterLastSlashPos, with: ["/"])
+            endPos = result.endIndex
+          }
+          curPos = afterLastSlashPos
+        } else {
+          curPos = result.index(after: curPos)
+        }
+      }
+    }
+    if stripTrailing && result.hasSuffix("/") {
+      result.remove(at: result.index(before: result.endIndex))
+    }
+    return result
+  }
+
+  public var lastPathComponent: String? {
+    guard let fixedSelf = _pathByFixingSlashes() else {
+      return nil
+    }
+    if fixedSelf.count <= 1 {
+      return fixedSelf
+    }
+
+    return String(fixedSelf.suffix(from: fixedSelf._startOfLastPathComponent))
+  }
 }
