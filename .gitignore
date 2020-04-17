@@ -5,6 +5,7 @@ Carthage/*
 SwiftFoundation/SwiftFoundationTests/1.json
 .build
 .swiftpm
+.vscode
 
 Packages/*
 
