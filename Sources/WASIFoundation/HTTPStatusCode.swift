@@ -6,6 +6,8 @@
 //  Copyright © 2015 PureSwift.
 //
 
+// swiftlint:disable file_length
+
 public extension HTTP {
   /// The standard status codes used with the [HTTP](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) protocol.
   enum StatusCode: Int {

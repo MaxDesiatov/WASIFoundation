@@ -77,7 +77,8 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
     hasher.combine(count)
 
     Swift.withUnsafeBytes(of: bytes) {
-      // We have access to the full byte buffer here, but not all of it is meaningfully used (bytes past self.length may be garbage).
+      // We have access to the full byte buffer here, but not all of it is meaningfully used (bytes
+      // past self.length may be garbage).
       let bytes = UnsafeRawBufferPointer(start: $0.baseAddress, count: self.count)
       hasher.combine(bytes: bytes)
     }

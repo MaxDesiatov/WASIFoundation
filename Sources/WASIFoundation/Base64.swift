@@ -24,7 +24,8 @@ public extension Data {
     public static let ignoreUnknownCharacters = Base64DecodingOptions(rawValue: UInt(1 << 0))
   }
 
-  /* Create an NSData from a Base-64 encoded NSString using the given options. By default, returns nil when the input is not recognized as valid Base-64.
+  /* Create an NSData from a Base-64 encoded NSString using the given options. By default, returns
+   nil when the input is not recognized as valid Base-64.
    */
   init?(base64Encoded base64String: String, options: Base64DecodingOptions = []) {
     let encodedBytes = Array(base64String.utf8)
@@ -42,7 +43,8 @@ public extension Data {
     return String(characters)
   }
 
-  /* Create an NSData from a Base-64, UTF-8 encoded NSData. By default, returns nil when the input is not recognized as valid Base-64.
+  /* Create Data from a Base-64, UTF-8 encoded Data. By default, returns nil when the input
+   is not recognized as valid Base-64.
    */
   init?(base64Encoded base64Data: Data, options: Base64DecodingOptions = []) {
     guard let decodedBytes = Data.base64DecodeBytes(base64Data.bytes, options: options) else {
@@ -51,7 +53,7 @@ public extension Data {
     self.init(bytes: decodedBytes, count: decodedBytes.count)
   }
 
-  /* Create a Base-64, UTF-8 encoded NSData from the receiver's contents using the given options.
+  /* Create a Base-64, UTF-8 encoded Data from the receiver's contents using the given options.
    */
   func base64EncodedData(_ options: Base64EncodingOptions = []) -> Data {
     let encodedBytes = Data.base64EncodeBytes(bytes, options: options)
@@ -206,9 +208,11 @@ public extension Data {
     let lineOptions: (lineLength: Int, separator: [UInt8])? = {
       let lineLength: Int
 
-      if options.contains(.encoding64CharacterLineLength) { lineLength = 64 }
-      else if options.contains(.encoding76CharacterLineLength) { lineLength = 76 }
-      else {
+      if options.contains(.encoding64CharacterLineLength) {
+        lineLength = 64
+      } else if options.contains(.encoding76CharacterLineLength) {
+        lineLength = 76
+      } else {
         return nil
       }
 

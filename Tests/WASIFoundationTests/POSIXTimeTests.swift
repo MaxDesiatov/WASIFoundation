@@ -33,7 +33,7 @@ final class POSIXTimeTests: XCTestCase {
 
     let time = timeval(timeInterval: date.timeIntervalSince1970)
 
-    XCTAssert(Int(time.timeInterval) == Int(date.timeIntervalSince1970), "TimeVal derived interval: \(time.timeInterval) must equal Date's timeIntervalSince1970 \(date.timeIntervalSince1970)")
+    XCTAssert(Int(time.timeInterval) == Int(date.timeIntervalSince1970))
   }
 
   func testTimeSpec() {
