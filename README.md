@@ -8,4 +8,4 @@ Swift Foundation built on top of the WebAssembly System Interface
 # License
 
 This project uses parts of SwiftFoundation, which are distributed under the terms of [the
-MIT License](SwiftFoundation-LICENSE).
+MIT License](/SwiftFoundation-LICENSE).
