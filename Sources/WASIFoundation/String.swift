@@ -40,10 +40,6 @@ public extension String {
     return nil
   }
 
-  func toUTF8Data() -> Data {
-    Data(bytes: Array(utf8))
-  }
-
   func substring(range: Range<Int>) -> String? {
     let indexRange = utf8.index(
       utf8.startIndex,

@@ -77,7 +77,7 @@ public struct Date: Equatable, Hashable, Comparable, CustomStringConvertible {
   }
 
   public var description: String {
-    "\(timeIntervalSinceReferenceDate)"
+    "\(DateFormatter().string(from: self))"
   }
 
   public func hash(into hasher: inout Hasher) {

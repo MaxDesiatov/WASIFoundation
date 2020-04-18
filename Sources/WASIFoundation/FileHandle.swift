@@ -13,11 +13,11 @@ public final class FileHandle {
     self.fileDescriptor = fileDescriptor
   }
 
-  static var standardError: FileHandle {
+  public static var standardError: FileHandle {
     .init(fileDescriptor: STDERR_FILENO)
   }
 
-  func write(_ data: Data) {
+  public func write(_ data: Data) {
     _ = data._bytes.withUnsafeBytes {
       libcWrite(fileDescriptor, $0.baseAddress, data.count)
     }

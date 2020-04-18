@@ -21,24 +21,19 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
 
   internal var _bytes: ContiguousArray<UInt8>
 
-  public var bytes: [UInt8] {
-    get { Array(_bytes) }
-
-    set { _bytes = ContiguousArray(newValue) }
-  }
-
   // MARK: - Initialization
 
-  /// Initialize a `Data` with the contents of an Array.
+  /// Initialize a `Data` with the contents of a Sequence.
   ///
   /// - parameter bytes: An array of bytes to copy.
-  public init(bytes: [UInt8] = []) {
-    _bytes = ContiguousArray(bytes)
+  public init<S>(_ elements: S) where S: Sequence, S.Element == UInt8 {
+    _bytes = ContiguousArray(elements)
   }
 
-  /// Initialize a `Data` with the contents of an Array.
-  ///
-  /// - parameter bytes: An array of bytes to copy.
+  public init() {
+    _bytes = ContiguousArray()
+  }
+
   public init(bytes: ArraySlice<UInt8>) {
     _bytes = ContiguousArray(bytes)
   }
@@ -46,8 +41,7 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
   /// Initialize a `Data` with the specified size.
   ///
   /// - parameter capacity: The size of the data.
-  public init?(count: Int) {
-    // Never fails on Linux
+  public init(count: Int) {
     _bytes = ContiguousArray(repeating: 0, count: count)
   }
 
@@ -58,7 +52,7 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
   public init(bytes pointer: UnsafeRawPointer, count: Int) {
     _bytes = ContiguousArray<UInt8>(repeating: 0, count: count)
 
-    memcpy(&bytes, pointer, count)
+    memcpy(&_bytes, pointer, count)
   }
 
   /// Initialize a `Data` with copied memory content.
@@ -76,7 +70,7 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
   public func hash(into hasher: inout Hasher) {
     hasher.combine(count)
 
-    Swift.withUnsafeBytes(of: bytes) {
+    _bytes.withUnsafeBytes {
       // We have access to the full byte buffer here, but not all of it is meaningfully used (bytes
       // past self.length may be garbage).
       let bytes = UnsafeRawBufferPointer(start: $0.baseAddress, count: self.count)
@@ -85,7 +79,7 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
   }
 
   public var description: String {
-    "<" + bytes.map { $0.toHexadecimal() }.joined() + ">"
+    "<" + _bytes.map { $0.toHexadecimal() }.joined() + ">"
   }
 
   // MARK: - Methods
@@ -149,11 +143,11 @@ public struct Data: Equatable, Hashable, CustomStringConvertible, RandomAccessCo
 public func ==(lhs: Data, rhs: Data) -> Bool {
   guard lhs.count == rhs.count else { return false }
 
-  var bytes1 = lhs.bytes
+  var bytes1 = lhs._bytes
 
-  var bytes2 = rhs.bytes
+  var bytes2 = rhs._bytes
 
-  return memcmp(&bytes1, &bytes2, lhs.bytes.count) == 0
+  return memcmp(&bytes1, &bytes2, lhs._bytes.count) == 0
 }
 
 // MARK: - Operators
@@ -164,4 +158,18 @@ public func +(lhs: Data, rhs: Data) -> Data {
   result._bytes = lhs._bytes + rhs._bytes
 
   return result
+}
+
+public extension String {
+  #if os(WASI)
+  enum Encoding {
+    case utf8
+  }
+  #endif
+
+  func data(using encoding: Encoding) -> Data? {
+    guard encoding == .utf8 else { return nil }
+
+    return Data(utf8)
+  }
 }
