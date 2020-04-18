@@ -161,9 +161,9 @@ public struct URL: CustomStringConvertible {
     return result
   }
 
-  public var lastPathComponent: String? {
+  public var lastPathComponent: String {
     guard let fixedSelf = _pathByFixingSlashes() else {
-      return nil
+      return ""
     }
     if fixedSelf.count <= 1 {
       return fixedSelf
