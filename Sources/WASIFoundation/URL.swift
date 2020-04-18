@@ -10,61 +10,33 @@
 public struct URL: CustomStringConvertible {
   // MARK: - Properties
 
-  public var scheme: String
-
-  public var user: String?
-
-  public var password: String?
-
+  public let scheme: String
+  public let user: String?
+  public let password: String?
   /// The host URL subcomponent (e.g. domain name, IP address)
-  public var host: String?
-
-  public var port: UInt?
-
-  public var path: String?
-
-  public var query: [(String, String)]?
+  public let host: String?
+  public let port: UInt?
+  public let path: String?
+  public let query: [(String, String)]?
 
   /// The fragment URL component (the part after a # symbol)
   public var fragment: String?
 
   // MARK: - Initialization
 
-  public init(scheme: String) {
-    self.scheme = scheme
-  }
-
-  /// Creates an instance from the string. String must be a valid URL.
-  public init?(stringValue: String) {
-    // parse string
-
-    debugPrint("URL parsing from string is not implemented yet!")
-
-    return nil
-  }
-
-  // MARK: - Generated Properties
-
-  /// Whether the URL components form a valid URL
-  public var valid: Bool {
-    // validate scheme
-
-    // host must exist for port to be specified
-    if port != nil { guard host != nil else { return false } }
-
-    // user and password must both be nil or non-nil
-    guard !((user != nil || password != nil) && (user == nil || password == nil)) else { return false }
-
-    // query must have at least one item
-    if query != nil { guard query!.count > 0 else { return false } }
-
-    return true
+  public init(fileURLWithPath path: String) {
+    scheme = "file://"
+    user = nil
+    password = nil
+    host = nil
+    port = nil
+    self.path = path
+    query = nil
+    fragment = nil
   }
 
   /// Returns a valid URL string or ```nil```
-  public var URLString: String? {
-    guard valid else { return nil }
-
+  var urlString: String? {
     var stringValue = scheme + "://"
 
     if let user = user { stringValue += user }
@@ -103,8 +75,8 @@ public struct URL: CustomStringConvertible {
 
     var description = ""
 
-    if let URLString = URLString {
-      description += "URL: " + URLString + separator
+    if let urlString = urlString {
+      description += "URL: " + urlString + separator
     }
 
     description += "Scheme: " + scheme

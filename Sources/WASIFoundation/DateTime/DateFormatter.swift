@@ -15,10 +15,10 @@ public final class DateFormatter {
     // FIXME: not very sensible estimate, but should work short-term
     let bufferSize = dateFormat.count * 10
     var buffer = ContiguousArray<Int8>(repeating: 0, count: bufferSize)
-    return buffer.withUnsafeMutableBufferPointer { mutableBuffer in
+    return buffer.withUnsafeMutableBufferPointer {
       guard
-        let baseAddress = mutableBuffer.baseAddress,
-        dateFormat.withCString({ (formatCString) -> Int in
+        let baseAddress = $0.baseAddress,
+        dateFormat.withCString({ formatCString -> Int in
           var tt = tm(UTCSecondsSince1970: time_t(interval))
           return strftime(baseAddress, bufferSize, formatCString, &tt)
         }) > 0
