@@ -69,6 +69,7 @@ public extension tm {
   init(UTCSecondsSince1970: time_t) {
     var seconds = UTCSecondsSince1970
 
+    // FIXME:
     // don't free!
     // The return value points to a statically allocated struct which might be overwritten by
     // subsequent calls to any of the date and time functions.
@@ -88,13 +89,5 @@ public typealias POSIXMicroseconds = __darwin_suseconds_t
 #else
 
 public typealias POSIXMicroseconds = suseconds_t
-
-public func modf(value: Double) -> (Double, Double) {
-  var integerValue: Double = 0
-
-  let decimalValue = modf(value, &integerValue)
-
-  return (decimalValue, integerValue)
-}
 
 #endif

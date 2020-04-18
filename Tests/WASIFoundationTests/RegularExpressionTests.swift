@@ -10,7 +10,6 @@
 import Glibc
 #endif
 
-import Foundation
 @testable import WASIFoundation
 import XCTest
 

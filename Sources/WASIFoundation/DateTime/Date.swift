@@ -139,10 +139,6 @@ public struct Date: Equatable, Hashable, Comparable, CustomStringConvertible {
 
 // MARK: - Operators
 
-public func ==(lhs: Date, rhs: Date) -> Bool {
-  lhs.timeIntervalSinceReferenceDate == rhs.timeIntervalSinceReferenceDate
-}
-
 public func <(lhs: Date, rhs: Date) -> Bool {
   lhs.timeIntervalSinceReferenceDate < rhs.timeIntervalSinceReferenceDate
 }
