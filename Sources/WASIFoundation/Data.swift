@@ -172,4 +172,16 @@ public extension String {
 
     return Data(utf8)
   }
+
+  init?(data: Data, encoding: Encoding) {
+    guard let string = data._bytes.withUnsafeBytes({ pointer -> String? in
+      guard
+        let baseAddress = pointer.bindMemory(to: CChar.self).baseAddress
+      else { return nil }
+
+      return String(validatingUTF8: baseAddress)
+    }) else { return nil }
+
+    self = string
+  }
 }
