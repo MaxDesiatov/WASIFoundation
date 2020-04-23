@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "pure-swift-json",
+        "repositoryURL": "https://github.com/fabianfett/pure-swift-json.git",
+        "state": {
+          "branch": null,
+          "revision": "816db7e4e35d584476ba52965224e4abf3517065",
+          "version": "0.2.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
