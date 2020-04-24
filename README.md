@@ -10,6 +10,7 @@ Minimalistic Swift Foundation built on top of [the WebAssembly System Interface]
 * `JSONDecoder` and `JSONEncoder`
 * `RegularExpression`
 * Basic `DateComponents` API
+* `Date`
 * `DateFormatter` with a hardcoded ISO format, custom formatting with the Foundation format isn't supported yet (because `strftime` format [is substantially different](https://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm) from Foundation's format specifiers)
 * `String.init(format:arguments:)`, `String.appendingFormat`, `String.appending`
 * Basic `URL` API.
