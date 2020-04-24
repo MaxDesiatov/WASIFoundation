@@ -184,4 +184,8 @@ public extension String {
 
     self = string
   }
+
+  init?<S>(bytes: S, encoding: String.Encoding) where S: Sequence, S.Element == UInt8 {
+    self.init(data: Data(bytes), encoding: encoding)
+  }
 }
