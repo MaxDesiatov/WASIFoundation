@@ -3,7 +3,7 @@
 [![Swift](https://img.shields.io/badge/swift-5.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![License](https://img.shields.io/badge/license-MIT-71787A.svg)](https://tldrlegal.com/license/mit-license)
 
-Minimalistic Swift Foundation built on top of the WebAssembly System Interface. Only a very limited subset of the API is implemented, just enough to bootstrap [the SwiftWasm efforts](https://swiftwasm.org), namely
+Minimalistic Swift Foundation built on top of [the WebAssembly System Interface](https://wasi.dev/). Only a very limited subset of the API is implemented, just enough to bootstrap [the SwiftWasm efforts](https://swiftwasm.org), namely
 
 * `Data` (base64 API not supported yet)
 * `FileHandle.init(fileDescriptor:)`, `FileHandle.write(_:)`, `FileHandle.standardError`
