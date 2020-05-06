@@ -28,10 +28,6 @@ let package = Package(
       name: "WASIFoundation",
       dependencies: ["PureSwiftJSONCoding"]
     ),
-    .target(
-      name: "TestRunner",
-      dependencies: ["WASIFoundation"]
-    ),
     .testTarget(
       name: "WASIFoundationTests",
       dependencies: ["WASIFoundation"]
