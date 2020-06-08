@@ -1,3 +1,5 @@
+## This repository is deprecated, use Foundation proper distributed with [SwiftWasm](https://swiftwasm.org)
+
 # WASIFoundation
 
 [![Swift](https://img.shields.io/badge/swift-5.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
